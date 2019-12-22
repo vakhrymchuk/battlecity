@@ -9,7 +9,7 @@ import static clientlib.TestSolver.STEP.*
 class SolverSpec extends Specification {
 
     @Unroll
-    def 'Correct step for going #direction and #action is #expectedMove'() {
+    def 'Correct step for going #direction is #expectedMove'() {
         when: 'Solver choose direction'
         def testSolver = solver
 
@@ -23,6 +23,7 @@ class SolverSpec extends Specification {
         new TestSolver(LEFT)            | 'LEFT'            | 'NONE'        | 'LEFT'
         new TestSolver(RIGHT)           | 'RIGHT'           | 'NONE'        | 'RIGHT'
         new TestSolver(ACT)             | 'ACT'             | 'NONE'        | 'ACT'
+        new TestSolver(DELAYED_ACT)     | 'DELAYED_ACT'     | 'NONE'        | 'ACT(1)'
         new TestSolver(ACT_AND_UP)      | 'ACT_AND_UP'      | 'BEFORE_TURN' | 'ACT,UP'
         new TestSolver(ACT_AND_DOWN)    | 'ACT_AND_DOWN'    | 'BEFORE_TURN' | 'ACT,DOWN'
         new TestSolver(ACT_AND_LEFT)    | 'ACT_AND_LEFT'    | 'BEFORE_TURN' | 'ACT,LEFT'
