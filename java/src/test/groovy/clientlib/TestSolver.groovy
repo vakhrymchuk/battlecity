@@ -1,7 +1,6 @@
-package clientlib;
+package clientlib
 
-import static clientlib.Action.AFTER_TURN;
-import static clientlib.Action.BEFORE_TURN
+
 import static clientlib.TestSolver.STEP.*;
 
 class TestSolver extends Solver {
@@ -12,6 +11,7 @@ class TestSolver extends Solver {
         LEFT,
         RIGHT,
         ACT,
+        DELAYED_ACT,
 
         ACT_AND_UP,
         ACT_AND_DOWN,
@@ -33,19 +33,20 @@ class TestSolver extends Solver {
     @Override
     public String move() {
         switch (stepToCheck) {
-            case ACT: return act();
-            case UP: return up();
-            case DOWN: return down();
-            case LEFT: return left();
-            case RIGHT: return right();
-            case ACT_AND_UP: return up(BEFORE_TURN);
-            case ACT_AND_DOWN: return down(BEFORE_TURN);
-            case ACT_AND_LEFT: return left(BEFORE_TURN);
-            case ACT_AND_RIGHT: return right(BEFORE_TURN);
-            case UP_AND_ACT: return up(AFTER_TURN);
-            case DOWN_AND_ACT: return down(AFTER_TURN);
-            case LEFT_AND_ACT: return left(AFTER_TURN);
-            case RIGHT_AND_ACT: return right(AFTER_TURN);
+            case ACT: return ActionPrinter.printAction(ActionPrinter.FireOrder.FIRE_BEFORE_TURN, null);
+            case DELAYED_ACT: return ActionPrinter.printAction(ActionPrinter.FireOrder.FIRE_AFTER_TURN, null);
+            case UP: return ActionPrinter.printAction(null, ActionPrinter.Direction.UP);
+            case DOWN: return ActionPrinter.printAction(null, ActionPrinter.Direction.DOWN);
+            case LEFT: return ActionPrinter.printAction(null, ActionPrinter.Direction.LEFT);
+            case RIGHT: return ActionPrinter.printAction(null, ActionPrinter.Direction.RIGHT);
+            case ACT_AND_UP: return ActionPrinter.printAction(ActionPrinter.FireOrder.FIRE_BEFORE_TURN, ActionPrinter.Direction.UP);
+            case ACT_AND_DOWN: return ActionPrinter.printAction(ActionPrinter.FireOrder.FIRE_BEFORE_TURN, ActionPrinter.Direction.DOWN);
+            case ACT_AND_LEFT: return ActionPrinter.printAction(ActionPrinter.FireOrder.FIRE_BEFORE_TURN, ActionPrinter.Direction.LEFT);
+            case ACT_AND_RIGHT: return ActionPrinter.printAction(ActionPrinter.FireOrder.FIRE_BEFORE_TURN, ActionPrinter.Direction.RIGHT);
+            case UP_AND_ACT: return ActionPrinter.printAction(ActionPrinter.FireOrder.FIRE_AFTER_TURN, ActionPrinter.Direction.UP);
+            case DOWN_AND_ACT: return ActionPrinter.printAction(ActionPrinter.FireOrder.FIRE_AFTER_TURN, ActionPrinter.Direction.DOWN);
+            case LEFT_AND_ACT: return ActionPrinter.printAction(ActionPrinter.FireOrder.FIRE_AFTER_TURN, ActionPrinter.Direction.LEFT);
+            case RIGHT_AND_ACT: return ActionPrinter.printAction(ActionPrinter.FireOrder.FIRE_AFTER_TURN, ActionPrinter.Direction.RIGHT);
         }
         throw new RuntimeException();
     }
