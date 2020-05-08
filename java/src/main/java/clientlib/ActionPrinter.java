@@ -34,8 +34,4 @@ public class ActionPrinter {
     public enum FireOrder {
         FIRE_BEFORE_TURN, FIRE_AFTER_TURN
     }
-
-    public enum Direction {
-        UP, RIGHT, DOWN, LEFT
-    }
 }

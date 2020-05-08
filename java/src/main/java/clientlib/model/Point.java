@@ -1,37 +1,36 @@
-package clientlib;
+package clientlib.model;
+
 
 import java.util.Objects;
 
 public class Point {
 
-    protected int x;
-    protected int y;
+    private int x;
+    private int y;
 
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public Point(Point point) {
-        this(point.getX(), point.getY());
-    }
-
-
     public int getX() {
         return x;
     }
-
 
     public int getY() {
         return y;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public Point diff(Point other) {
+        return new Point(x - other.x, y - other.y);
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public int absSum() {
+        return Math.abs(x) + Math.abs(y);
+    }
+
+    public int manhattanDistance(Point other) {
+        return diff(other).absSum();
     }
 
     @Override
@@ -40,11 +39,19 @@ public class Point {
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
         return x == point.x &&
-                y == point.y;
+               y == point.y;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+               "x=" + x +
+               ", y=" + y +
+               '}';
     }
 }
