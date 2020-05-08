@@ -3,9 +3,10 @@ package clientlib;
 import clientlib.model.Message;
 import clientlib.model.Point;
 import clientlib.model.Tank;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class SampleSolver extends Solver {
 
     private Random rnd = new Random();
 
-    public List<Point> getBarriers(Message message) {
+    List<Point> getBarriers(Message message) {
         List<Point> barriers = new ArrayList<>();
         barriers.addAll(message.getConstructions());
         barriers.addAll(message.getAiTanks());
@@ -27,25 +28,15 @@ public class SampleSolver extends Solver {
     /**
      * manhattan distance used
      */
-    public Tank getNearest(List<Tank> tanks) {
+    Tank getNearest(List<Tank> tanks) {
         if (tanks == null || tanks.isEmpty()) {
             return null;
         }
-
-        Iterator<Tank> iterator = tanks.iterator();
-        Tank closest = iterator.next();
-
         Tank playerTank = message.getPlayerTank();
-        int minDist = closest.manhattanDistance(playerTank);
-        while (iterator.hasNext()) {
-            Tank current = iterator.next();
-            int currentDistance = current.manhattanDistance(playerTank);
-            if (currentDistance < minDist) {
-                minDist = currentDistance;
-                closest = current;
-            }
-        }
-        return closest;
+        return tanks.stream()
+                    .map(tank -> new ImmutablePair<>(playerTank.manhattanDistance(tank), tank))
+                    .min(Comparator.comparingInt(o -> o.left))
+                    .get().right;
     }
 
 
