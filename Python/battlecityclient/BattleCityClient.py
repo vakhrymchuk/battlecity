@@ -1,12 +1,8 @@
 import logging
 import websocket
-import threading
 import time
-import math
-from enum import Enum
-
-from battlecityclient.internals.actions import BattlecityAction
-from battlecityclient.internals.board import Board
+import json
+from battlecityclient.internals.message import Message
 
 logger = logging.getLogger(__name__)
 
@@ -31,10 +27,10 @@ class GameClient:
         self.socket.run_forever()
 
     def on_message(self, ws, message):
-        board = Board(message.lstrip("board="))
-        board.print_board()
-        action = self.on_turn(board)
-        self.__send(action.value)
+        message = Message(json.loads(message.lstrip("board=")))
+        message.print_board()
+        action = self.on_turn(message)
+        self.__send(action)
 
     def __send(self, msg):
         logger.info('Sending: {}'.format(msg))

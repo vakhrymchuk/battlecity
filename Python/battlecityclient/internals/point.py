@@ -1,10 +1,9 @@
-
-class Point:
+class Point(object):
     """ Describes a point on board."""
     def __init__(self, x=0, y=0):
         self._x = int(x)
         self._y = int(y)
-    
+
     def __key(self):
         return self._x, self._y
 
@@ -26,9 +25,14 @@ class Point:
     def get_y(self):
         return self._y
 
-    def is_bad(self, board_size):
-        return (self._x > board_size or self._x < 0 or
-                self._y > board_size or self._y < 0)
+    def abs_sum(self):
+        return abs(self._x) + abs(self._y)
+
+    def diff(self, o):
+        return Point(x=self._x - o._x, y=self._y - o._y)
+
+    def manhattan_distance(self, o):
+        return self.diff(o).abs_sum()
 
     def to_string(self):
         return "[{},{}]".format(self._x, self._y)
