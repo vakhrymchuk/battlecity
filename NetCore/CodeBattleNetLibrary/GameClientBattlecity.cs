@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using CodeBattleNetLibrary.GameModels;
 using CodeBattleNetLibrary.Models;
 using Newtonsoft.Json;
@@ -12,20 +13,20 @@ namespace CodeBattleNetLibrary
     public class GameClientBattlecity
     {
         private WebSocket _socket;
-        private readonly Func<StepData, StepCommands> _userActionHandler;
-        public GameClientBattlecity(string url, Func<StepData, StepCommands> action)
+        private readonly Func<StepData, Task<StepCommands>> _userActionHandler;
+        public GameClientBattlecity(string url, Func<StepData, Task<StepCommands>> action)
         {
             configureSocket(url);
             _userActionHandler = action;
         }
 
-        private void OnMessageReceivedHandler(string message)
+        private async void OnMessageReceivedHandler(string message)
         {
             var stepData = ParseField(message);
             //Console.WriteLine("Received field");
             //Console.Write(stepData.RawLayers);
             
-            var userBotResponse = _userActionHandler(stepData);
+            var userBotResponse = await _userActionHandler(stepData);
             var actions = PrintActions(userBotResponse);
             Console.WriteLine("Send actions");
             Console.WriteLine(actions);
