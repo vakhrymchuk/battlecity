@@ -26,14 +26,37 @@ namespace CodeBattleNetLibrary
         private async void OnMessageReceivedHandler(string message)
         {
             var stepData = ParseField(message);
-            //Console.WriteLine("Received field");
-            //Console.Write(stepData.RawLayers);
-            
+            PrintLayersToConsole(stepData.RawLayers);            
             var userBotResponse = await _userActionHandler(stepData);
             var actions = PrintActions(userBotResponse);
             Console.WriteLine("Send actions");
             Console.WriteLine(actions);
             SendActions(actions);
+        }
+
+        private void PrintLayersToConsole(string rawLayers)
+        {
+            Console.WriteLine("Received field");
+            rawLayers = rawLayers.Substring(6);
+            int rowLength = 0;
+            foreach (var symbol in rawLayers)
+            {
+                if (symbol == '\\')
+                {
+                    break;   
+                }
+                rowLength++;
+            }
+
+            rawLayers = rawLayers.Replace("\\n","");
+            int stringPointer = 0;
+            while (stringPointer <= rawLayers.Length)
+            {
+                if((stringPointer + rowLength) > rawLayers.Length ) break;
+                Console.WriteLine(rawLayers.Substring(stringPointer,rowLength));
+                stringPointer += rowLength;
+            }
+
         }
 
         private string PrintActions(StepCommands stepCommands)
