@@ -1,3 +1,14 @@
 /Java/code-battle-client.iml
 /Java/.idea/
 /Java/target/
+*/.idea/**/*.iml
+**/.idea/**/contentModel.xml
+**/.idea/**/modules.xml
+
+/Net/.idea/
+/Net/*.suo
+/Net/*.user
+/Net/*/[Bb]in/
+/Net/*/[Oo]bj/
+/Net/_UpgradeReport_Files/
+/Net/[Pp]ackages/

@@ -1,49 +1,30 @@
 ﻿using System;
 using CodeBattleNetLibrary;
+using CodeBattleNetLibrary.Models;
 
 namespace CodeBattleNet
 {
     internal static class Program
     {
-        private static void Main()
+        private static void Main(string[] args)
         {
-            new GameClientBattlecity("http://localhost:8080/codenjoy-contest/board/player/demo15@codenjoy.com?code=3186282887493133449", createAction());
-
+            var url = "http://192.168.8.34/codenjoy-contest/board/player/21b4yiz462hf1lpmewkb?code=1640566413676185557";
+            if (args.Length > 0)
+            {
+                url = args[0];
+            }     
+            new GameClientBattlecity(url, createAction);
             Console.Read();
         }
 
-        private static Func<GameClientBattlecity, String> createAction()
+        private static StepCommands createAction(StepData stepData)
         {
-            return new Func<GameClientBattlecity, String>((gcb) =>
-            {
-                var r = new Random();
-                FireOrder? fireOrder = null;
-
-                switch (r.Next(3))
-                {
-                    case 0:
-                        fireOrder = FireOrder.FIRE_BEFORE_TURN;
-                        break;
-                    case 1:
-                        fireOrder = FireOrder.FIRE_AFTER_TURN;
-                        break;
-                }
-                switch (r.Next(5))
-                {
-                    case 0:
-                        return ActionPrinter.printAction(fireOrder, Direction.UP);
-                    case 1:
-                        return ActionPrinter.printAction(fireOrder, Direction.RIGHT);
-                    case 2:
-                        return ActionPrinter.printAction(fireOrder, Direction.LEFT);
-                    case 3:
-                        return ActionPrinter.printAction(fireOrder, Direction.DOWN);
-                    case 4:
-                        return ActionPrinter.printAction(fireOrder, null);
-                }
-                return ActionPrinter.printAction(null, null);
-            });
-            
+            //stepData contains info about board configuration at current step
+            //stepCommands this is your response. What you robot should do.
+            StepCommands stepCommands = new StepCommands();
+            stepCommands.CommandTwo = Commands.GO_TOP;
+            stepCommands.CommandOne = Commands.FIRE;
+            return stepCommands;
         }
     }
 }

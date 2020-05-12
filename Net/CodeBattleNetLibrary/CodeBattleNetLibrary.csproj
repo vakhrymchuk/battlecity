@@ -51,6 +51,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SuperSocket.ClientEngine, Version=0.10.0.0, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
       <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.10.0\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
     </Reference>
@@ -67,9 +71,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Elements.cs" />
-    <Compile Include="CodeBattleNetLibrary.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="GameClientBattlecity.cs" />
+    <Compile Include="GameModels\Border.cs" />
+    <Compile Include="GameModels\Bullet.cs" />
+    <Compile Include="GameModels\Construction.cs" />
+    <Compile Include="GameModels\Direction.cs" />
+    <Compile Include="GameModels\Point.cs" />
+    <Compile Include="GameModels\Tank.cs" />
+    <Compile Include="Models\Commands.cs" />
+    <Compile Include="Models\StepCommands.cs" />
+    <Compile Include="Models\StepData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
