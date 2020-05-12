@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using CodeBattleNetLibrary.GameModels;
@@ -13,10 +14,12 @@ namespace CodeBattleNetLibrary
     public class GameClientBattlecity
     {
         private WebSocket _socket;
+        private string _serverUrl;
         private readonly Func<StepData, Task<StepCommands>> _userActionHandler;
         public GameClientBattlecity(string url, Func<StepData, Task<StepCommands>> action)
         {
-            configureSocket(url);
+            _serverUrl = url.Replace("http", "ws").Replace("board/player/", "ws?user=").Replace("?code=", "&code=");
+            ConfigureSocket();
             _userActionHandler = action;
         }
 
@@ -104,12 +107,32 @@ namespace CodeBattleNetLibrary
             _socket.Send(commands);
         }
         
-        private void configureSocket(string url)
+        private async void ConfigureSocket()
         {
-            var serverUrl = url.Replace("http", "ws").Replace("board/player/", "ws?user=").Replace("?code=", "&code=");
-            _socket = new WebSocket(serverUrl);
+            Console.WriteLine("Connecting to the server.");
+            _socket?.Dispose();
+            _socket = new WebSocket(_serverUrl);
             _socket.MessageReceived += (s, e) => { OnMessageReceivedHandler(e.Message); };
+            _socket.Closed += (s, e) => { SocketNotConnected(); };
             _socket.Open();
+            Thread.Sleep(500);
+            if (_socket.State != WebSocketState.Open)
+            {
+                await SocketNotConnected();      
+            }
+            else
+            {
+                Console.WriteLine("Connection successful");
+            }
         }
+
+        private async Task SocketNotConnected()
+        {
+            Console.WriteLine("Unable to connect or connection was unexpectedly lost");
+            Thread.Sleep(3000);
+            Console.WriteLine("Try to reconnect...");
+            ConfigureSocket();     
+        }
+        
     }
 }

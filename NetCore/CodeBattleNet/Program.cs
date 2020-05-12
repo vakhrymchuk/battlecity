@@ -14,11 +14,11 @@ namespace CodeBattleNet
             {
                 url = args[0];
             }     
-            new GameClientBattlecity(url, createAction);
+            new GameClientBattlecity(url, CreateAction);
             Console.Read();
         }
 
-        private static async Task<StepCommands> createAction(StepData stepData)
+        private static async Task<StepCommands> CreateAction(StepData stepData)
         {
             //stepData contains info about board configuration at current step
             //stepCommands this is your response. What you robot should do.
