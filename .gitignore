@@ -5,10 +5,18 @@
 **/.idea/**/contentModel.xml
 **/.idea/**/modules.xml
 
-/Net/.idea/
+/Net/*.idea/
 /Net/*.suo
 /Net/*.user
 /Net/*/[Bb]in/
 /Net/*/[Oo]bj/
 /Net/_UpgradeReport_Files/
 /Net/[Pp]ackages/
+
+/NetCore/*.idea/
+/NetCore/*.suo
+/NetCore/*.user
+/NetCore/*/[Bb]in/
+/NetCore/*/[Oo]bj/
+/NetCore/_UpgradeReport_Files/
+/NetCore/[Pp]ackages/
