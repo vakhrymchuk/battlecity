@@ -22,9 +22,9 @@ namespace CodeBattleNet
         {
             //stepData contains info about board configuration at current step
             //stepCommands this is your response. What you robot should do.
-            StepCommands stepCommands = new StepCommands();
-            stepCommands.CommandTwo = Commands.GO_TOP;
-            stepCommands.CommandOne = Commands.FIRE;
+            var stepCommands = new StepCommands();
+            stepCommands.Command = Commands.GO_TOP;
+            stepCommands.Fire = Fire.FIRE_BEFORE_ACTION;
             return stepCommands;
         }
     }

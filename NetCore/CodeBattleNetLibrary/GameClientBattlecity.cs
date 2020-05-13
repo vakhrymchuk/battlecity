@@ -16,6 +16,7 @@ namespace CodeBattleNetLibrary
         private WebSocket _socket;
         private string _serverUrl;
         private readonly Func<StepData, Task<StepCommands>> _userActionHandler;
+
         public GameClientBattlecity(string url, Func<StepData, Task<StepCommands>> action)
         {
             _serverUrl = url.Replace("http", "ws").Replace("board/player/", "ws?user=").Replace("?code=", "&code=");
@@ -26,13 +27,13 @@ namespace CodeBattleNetLibrary
         private async void OnMessageReceivedHandler(string message)
         {
             var stepData = ParseField(message);
-            
+
             if (stepData == null)
             {
                 return;
             }
-            
-            PrintLayersToConsole(stepData.Layers[0]);            
+
+            PrintLayersToConsole(stepData.Layers[0]);
             var userBotResponse = await _userActionHandler(stepData);
             var actions = PrintActions(userBotResponse);
             Console.WriteLine("Send actions");
@@ -49,72 +50,72 @@ namespace CodeBattleNetLibrary
             {
                 if (symbol == '\\')
                 {
-                    break;   
+                    break;
                 }
+
                 rowLength++;
             }
 
-            rawLayers = rawLayers.Replace("\\n","");
+            rawLayers = rawLayers.Replace("\\n", "");
             int stringPointer = 0;
             while (stringPointer <= rawLayers.Length)
             {
-                if((stringPointer + rowLength) > rawLayers.Length ) break;
-                Console.WriteLine(rawLayers.Substring(stringPointer,rowLength));
+                if ((stringPointer + rowLength) > rawLayers.Length) break;
+                Console.WriteLine(rawLayers.Substring(stringPointer, rowLength));
                 stringPointer += rowLength;
             }
-
         }
 
         private string PrintActions(StepCommands stepCommands)
         {
-            string response = string.Empty;
-            
-            switch (stepCommands.CommandOne)
+            var response = string.Empty;
+
+            if (stepCommands.Fire == Fire.FIRE_BEFORE_ACTION)
             {
-                case Commands.GO_TOP:
-                    response += "UP";
-                    break;
-                case Commands.GO_DOWN:
-                    response += "DOWN";
-                    break;
-                case Commands.GO_LEFT:
-                    response += "LEFT";
-                    break;
-                case Commands.GO_RIGHT:
-                    response += "RIGHT";
-                    break;
-                case Commands.FIRE:
-                    response += "ACT";
-                    break;  
+                response += "FIRE";
+                if (stepCommands.Command != 0)
+                {
+                    response += ",";
+                    response += ChooseCommand(stepCommands.Command);
+                }
+
+                return response;
             }
 
-            if (stepCommands.CommandOne != 0 && stepCommands.CommandTwo != 0)
+            if (stepCommands.Fire == Fire.FIRE_AFTER_ACTION)
             {
+                response += ChooseCommand(stepCommands.Command);
                 response += ",";
+                response += "FIRE";
+                return response;
             }
-            
-            switch (stepCommands.CommandTwo)
-            {
-                case Commands.GO_TOP:
-                    response += "UP";
-                    break;
-                case Commands.GO_DOWN:
-                    response += "DOWN";
-                    break;
-                case Commands.GO_LEFT:
-                    response += "LEFT";
-                    break;
-                case Commands.GO_RIGHT:
-                    response += "RIGHT";
-                    break;
-                case Commands.FIRE:
-                    response += "ACT";
-                    break;  
-            }
-            
+
+            response += ChooseCommand(stepCommands.Command);
+
             return response;
         }
-        
+
+        private string ChooseCommand(Commands command)
+        {
+            switch (command)
+            {
+                case Commands.GO_TOP:
+                    return "UP";
+                    break;
+                case Commands.GO_DOWN:
+                    return "DOWN";
+                    break;
+                case Commands.GO_LEFT:
+                    return "LEFT";
+                    break;
+                case Commands.GO_RIGHT:
+                    return "RIGHT";
+                    break;
+            }
+
+            return string.Empty;
+        }
+
         private StepData ParseField(string rawField)
         {
             rawField = rawField.Substring(6);
@@ -128,14 +129,14 @@ namespace CodeBattleNetLibrary
                 Console.WriteLine("Can't parse server response");
                 Console.WriteLine(e.Message);
                 return null;
-            }  
+            }
         }
-        
+
         private void SendActions(string commands)
         {
             _socket.Send(commands);
         }
-        
+
         private async void ConfigureSocket()
         {
             Console.WriteLine("Connecting to the server.");
@@ -147,7 +148,7 @@ namespace CodeBattleNetLibrary
             Thread.Sleep(500);
             if (_socket.State != WebSocketState.Open)
             {
-                await SocketNotConnected();      
+                await SocketNotConnected();
             }
             else
             {
@@ -160,8 +161,7 @@ namespace CodeBattleNetLibrary
             Console.WriteLine("Unable to connect or connection was unexpectedly lost");
             Thread.Sleep(3000);
             Console.WriteLine("Try to reconnect...");
-            ConfigureSocket();     
+            ConfigureSocket();
         }
-        
     }
 }

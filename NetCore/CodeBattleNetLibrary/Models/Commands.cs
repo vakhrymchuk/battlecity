@@ -6,6 +6,12 @@ namespace CodeBattleNetLibrary.Models
         GO_TOP = 2,
         GO_RIGHT = 3,
         GO_DOWN = 4,
-        FIRE = 5
     }
+
+    public enum Fire : byte
+    {
+        FIRE_BEFORE_ACTION = 1,
+        FIRE_AFTER_ACTION = 2
+    }
+    
 }

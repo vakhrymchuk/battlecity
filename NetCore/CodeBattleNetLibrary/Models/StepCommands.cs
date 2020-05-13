@@ -2,7 +2,7 @@ namespace CodeBattleNetLibrary.Models
 {
     public class StepCommands
     {
-        public Commands CommandOne { get; set; } 
-        public Commands CommandTwo { get; set; }
+        public Commands Command { get; set; } 
+        public Fire Fire { get; set; }
     }
 }
