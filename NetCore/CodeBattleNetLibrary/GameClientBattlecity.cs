@@ -26,7 +26,13 @@ namespace CodeBattleNetLibrary
         private async void OnMessageReceivedHandler(string message)
         {
             var stepData = ParseField(message);
-            PrintLayersToConsole(stepData.RawLayers);            
+            
+            if (stepData == null)
+            {
+                return;
+            }
+            
+            PrintLayersToConsole(stepData.Layers[0]);            
             var userBotResponse = await _userActionHandler(stepData);
             var actions = PrintActions(userBotResponse);
             Console.WriteLine("Send actions");
@@ -112,17 +118,17 @@ namespace CodeBattleNetLibrary
         private StepData ParseField(string rawField)
         {
             rawField = rawField.Substring(6);
-            var jsonField = JObject.Parse(rawField);
-            var playerTank = jsonField["playerTank"].ToObject<Tank>();
-            var borders = jsonField["borders"].ToObject<List<Border>>();
-            var aiTanks = jsonField["aiTanks"].ToObject<List<Tank>>();
-            var constructions = jsonField["constructions"].ToObject<List<Construction>>();
-            var enemies = jsonField["enemies"].ToObject<List<Tank>>();
-            var bullets = jsonField["bullets"].ToObject<List<Bullet>>();
-            var rawLayers = jsonField["layers"].ToString();
-            var stepData = new StepData(playerTank ,aiTanks,enemies,constructions,borders,bullets,rawLayers);
-
-            return stepData;
+            try
+            {
+                var stepData = JsonConvert.DeserializeObject<StepData>(rawField);
+                return stepData;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Can't parse server response");
+                Console.WriteLine(e.Message);
+                return null;
+            }  
         }
         
         private void SendActions(string commands)

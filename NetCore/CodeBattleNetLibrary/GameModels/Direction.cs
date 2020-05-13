@@ -2,8 +2,8 @@ namespace CodeBattleNetLibrary.GameModels
 {
    public struct Direction
    {
-      private sbyte dX { get; }
-      private sbyte dY { get; }
+      private sbyte dX { get; set;}
+      private sbyte dY { get; set;}
 
       public Direction(sbyte dx, sbyte dy)
       {

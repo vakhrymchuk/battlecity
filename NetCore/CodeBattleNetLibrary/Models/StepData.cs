@@ -1,27 +1,28 @@
 using System.Collections.Generic;
 using CodeBattleNetLibrary.GameModels;
+using Newtonsoft.Json;
 
 namespace CodeBattleNetLibrary.Models
 {
     public class StepData
     {
-        public Tank PlayerTank { get; }
-        public List<Tank> AiTanks { get; }
-        public List<Tank> EnemyTanks { get; }
-        public List<Construction> Constructions { get; }
-        public List<Border> Borders { get; }
-        public List<Bullet> Bullets { get; }
-        public string RawLayers { get; }
+        public Tank PlayerTank { get; set; }  
+        public List<Tank> AiTanks { get; set;}      
+        public List<Tank> Enemies { get; set;}       
+        public List<Construction> Constructions { get; set;}     
+        public List<Border> Borders { get; set;}     
+        public List<Bullet> Bullets { get; set;}     
+        public List<string> Layers { get; set;}
 
-        public StepData(Tank tank, List<Tank> aiTanks, List<Tank> enemyTanks, List<Construction> constructions, List<Border> borders, List<Bullet> bullets, string rawLayers)
+        public StepData(Tank tank, List<Tank> aiTanks, List<Tank> enemies, List<Construction> constructions, List<Border> borders, List<Bullet> bullets, List<string> layers)
         {
             PlayerTank = tank;
             AiTanks = aiTanks;
-            EnemyTanks = enemyTanks;
+            Enemies = enemies;
             Constructions = constructions;
             Borders = borders;
             Bullets = bullets;
-            RawLayers = rawLayers;
+            Layers = layers;
         }
         public StepData(){}
     }
