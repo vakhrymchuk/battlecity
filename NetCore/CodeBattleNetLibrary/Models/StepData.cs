@@ -6,13 +6,13 @@ namespace CodeBattleNetLibrary.Models
 {
     public class StepData
     {
-        public Tank PlayerTank { get; set; }  
-        public List<Tank> AiTanks { get; set;}      
-        public List<Tank> Enemies { get; set;}       
-        public List<Construction> Constructions { get; set;}     
-        public List<Border> Borders { get; set;}     
-        public List<Bullet> Bullets { get; set;}     
-        public List<string> Layers { get; set;}
+        public Tank PlayerTank { get; private set; }  
+        public List<Tank> AiTanks { get; private set;}      
+        public List<Tank> Enemies { get; private set;}       
+        public List<Construction> Constructions { get; private set;}     
+        public List<Border> Borders { get; private set;}     
+        public List<Bullet> Bullets { get; private set;}     
+        public List<string> Layers { get; private set;}
 
         public StepData(Tank tank, List<Tank> aiTanks, List<Tank> enemies, List<Construction> constructions, List<Border> borders, List<Bullet> bullets, List<string> layers)
         {

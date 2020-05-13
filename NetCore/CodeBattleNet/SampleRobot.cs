@@ -55,7 +55,7 @@ namespace CodeBattleNet
             }
 
             stepCommands.Command =
-                availableCommands[_rnd.Next(0,availableCommands.Count-1)];
+                availableCommands[_rnd.Next(1,availableCommands.Count)-1];
 
             return stepCommands;
         }
