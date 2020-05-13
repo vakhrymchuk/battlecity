@@ -13,19 +13,11 @@ namespace CodeBattleNet
             if (args.Length > 0)
             {
                 url = args[0];
-            }     
-            new GameClientBattlecity(url, CreateAction);
+            }
+            IBattlecityRobot robot = new SampleRobot();
+            
+            new GameClientBattlecity(url, robot);
             Console.Read();
-        }
-
-        private static async Task<StepCommands> CreateAction(StepData stepData)
-        {
-            //stepData contains info about board configuration at current step
-            //stepCommands this is your response. What you robot should do.
-            var stepCommands = new StepCommands();
-            stepCommands.Command = Commands.GO_TOP;
-            stepCommands.Fire = Fire.FIRE_BEFORE_ACTION;
-            return stepCommands;
         }
     }
 }

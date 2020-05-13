@@ -17,11 +17,11 @@ namespace CodeBattleNetLibrary
         private string _serverUrl;
         private readonly Func<StepData, Task<StepCommands>> _userActionHandler;
 
-        public GameClientBattlecity(string url, Func<StepData, Task<StepCommands>> action)
+        public GameClientBattlecity(string url, IBattlecityRobot robot)
         {
             _serverUrl = url.Replace("http", "ws").Replace("board/player/", "ws?user=").Replace("?code=", "&code=");
             ConfigureSocket();
-            _userActionHandler = action;
+            _userActionHandler = robot.CreateAction;
         }
 
         private async void OnMessageReceivedHandler(string message)
@@ -72,7 +72,7 @@ namespace CodeBattleNetLibrary
 
             if (stepCommands.Fire == Fire.FIRE_BEFORE_ACTION)
             {
-                response += "FIRE";
+                response += "ACT";
                 if (stepCommands.Command != 0)
                 {
                     response += ",";
@@ -86,7 +86,7 @@ namespace CodeBattleNetLibrary
             {
                 response += ChooseCommand(stepCommands.Command);
                 response += ",";
-                response += "FIRE";
+                response += "ACT";
                 return response;
             }
 

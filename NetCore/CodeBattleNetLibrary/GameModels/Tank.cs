@@ -2,10 +2,10 @@ namespace CodeBattleNetLibrary.GameModels
 {
     public class Tank : Point
     {
-        private string Direction { get; set;}
-        private int FireCoolDown { get; set;}
-        private int KilledCounter { get; set;}
-        private bool Alive { get; set;}
+        public string Direction { get; set;}
+        public int FireCoolDown { get; set;}
+        public int KilledCounter { get; set;}
+        public bool Alive { get; set;}
         
         public Tank(int x, int y, string direction, int fireCoolDown, int killedCounter, bool alive) : base(x, y)
         {
