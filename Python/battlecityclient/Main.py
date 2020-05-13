@@ -29,6 +29,8 @@ def get_nearest(tanks, current_tank):
 
 
 def turn(gcb: Message):
+    if not gcb.player_tank.is_alive():
+        return print_action()
     fire_order = random.choice([None, FireOrder.FIRE_AFTER_TURN, FireOrder.FIRE_BEFORE_TURN])
     closest_enemy = get_nearest(list(filter(lambda tank: tank.is_alive(), gcb.ai_tanks + gcb.enemies)), gcb.player_tank)
     diff = gcb.player_tank.diff(closest_enemy)
