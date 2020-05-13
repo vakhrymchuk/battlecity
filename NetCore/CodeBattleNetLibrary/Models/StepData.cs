@@ -14,9 +14,9 @@ namespace CodeBattleNetLibrary.Models
         public List<Bullet> Bullets { get; private set;}     
         public List<string> Layers { get; private set;}
 
-        public StepData(Tank tank, List<Tank> aiTanks, List<Tank> enemies, List<Construction> constructions, List<Border> borders, List<Bullet> bullets, List<string> layers)
+        public StepData(Tank playerTank, List<Tank> aiTanks, List<Tank> enemies, List<Construction> constructions, List<Border> borders, List<Bullet> bullets, List<string> layers)
         {
-            PlayerTank = tank;
+            PlayerTank = playerTank;
             AiTanks = aiTanks;
             Enemies = enemies;
             Constructions = constructions;
@@ -24,6 +24,5 @@ namespace CodeBattleNetLibrary.Models
             Bullets = bullets;
             Layers = layers;
         }
-        public StepData(){}
     }
 }
