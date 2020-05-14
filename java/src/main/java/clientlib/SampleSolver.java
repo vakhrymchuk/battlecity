@@ -42,6 +42,9 @@ public class SampleSolver extends Solver {
 
     @Override
     public String move() {
+        if (!message.getPlayerTank().isAlive()) {
+            return ActionPrinter.printAction(null, null);
+        }
         ActionPrinter.FireOrder fireOrder = null;
         switch (rnd.nextInt(3)) {
             case 1:
