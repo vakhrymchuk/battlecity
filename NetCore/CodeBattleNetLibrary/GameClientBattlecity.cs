@@ -20,8 +20,8 @@ namespace CodeBattleNetLibrary
         public GameClientBattlecity(string url, IBattlecityRobot robot)
         {
             _serverUrl = url.Replace("http", "ws").Replace("board/player/", "ws?user=").Replace("?code=", "&code=");
-            ConfigureSocket();
             _userActionHandler = robot.CreateAction;
+            ConfigureSocket();
         }
 
         private async void OnMessageReceivedHandler(string message)
@@ -101,16 +101,12 @@ namespace CodeBattleNetLibrary
             {
                 case Commands.GO_TOP:
                     return "UP";
-                    break;
                 case Commands.GO_DOWN:
                     return "DOWN";
-                    break;
                 case Commands.GO_LEFT:
                     return "LEFT";
-                    break;
                 case Commands.GO_RIGHT:
                     return "RIGHT";
-                    break;
             }
 
             return string.Empty;
