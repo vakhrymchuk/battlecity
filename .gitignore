@@ -1,3 +1,5 @@
+/.idea/
+/venv/
 /Java/code-battle-client.iml
 /Java/.idea/
 /Java/target/
