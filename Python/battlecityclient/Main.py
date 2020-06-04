@@ -33,7 +33,7 @@ def turn(gcb: Message):
         return print_action()
     fire_order = random.choice([None, FireOrder.FIRE_AFTER_TURN, FireOrder.FIRE_BEFORE_TURN])
     closest_enemy = get_nearest(list(filter(lambda tank: tank.is_alive(), gcb.ai_tanks + gcb.enemies)), gcb.player_tank)
-    diff = gcb.player_tank.diff(closest_enemy)
+    diff = closest_enemy.diff(gcb.player_tank)
 
     available_directions = []
     if diff.get_x() * Direction.LEFT.dx > 0:

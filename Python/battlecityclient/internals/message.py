@@ -14,10 +14,10 @@ class Direction(enum.Enum):
         self.dx = dx
         self.dy = dy
 
-    LEFT = 1, 0
-    RIGHT = -1, 0
-    UP = 0, -1
-    DOWN = 0, 1
+    LEFT = -1, 0
+    RIGHT = 1, 0
+    UP = 0, 1
+    DOWN = 0, -1
 
 
 class Tank(Point):

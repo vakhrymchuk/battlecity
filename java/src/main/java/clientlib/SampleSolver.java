@@ -61,7 +61,7 @@ public class SampleSolver extends Solver {
         allTanks = allTanks.stream().filter(Tank::isAlive).collect(Collectors.toList());
 
         Tank nearestEnemy = getNearest(allTanks);
-        Point diff = message.getPlayerTank().diff(nearestEnemy);
+        Point diff = nearestEnemy.diff(message.getPlayerTank());
 
         List<Direction> availableDirections = new ArrayList<>();
         if (diff.getX() * Direction.LEFT.getDx() > 0) {
