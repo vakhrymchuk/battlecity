@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WebSocketRunner {
-    private static final boolean PRINT_TO_CONSOLE = true;
+    private static final boolean PRINT_TO_CONSOLE = false;
     private static final Map<String, WebSocketRunner> CLIENTS = new ConcurrentHashMap<>();
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
     private final Solver solver;

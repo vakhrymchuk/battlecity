@@ -1,28 +1,36 @@
 package clientlib.model;
 
 
-import java.util.Objects;
+import clientlib.map.Type;
+import lombok.*;
 
-public class Point {
+import java.io.Serializable;
 
-    private int x;
-    private int y;
+import static clientlib.model.Direction.*;
+
+@Data
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+public class Point implements Serializable {
+
+    protected int x;
+    protected int y;
+    protected Type type;
 
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
 
     public Point diff(Point other) {
         return new Point(x - other.x, y - other.y);
+    }
+
+    public Point dir(Direction direction) {
+        return new Point(x + direction.getDx(), y + direction.getDy());
     }
 
     public int absSum() {
@@ -33,25 +41,15 @@ public class Point {
         return diff(other).absSum();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Point point = (Point) o;
-        return x == point.x &&
-               y == point.y;
+    public Direction toBiggestDir() {
+        if (Math.abs(x) < Math.abs(y)) {
+            return y > 0 ? UP : DOWN;
+        }
+        return x > 0 ? RIGHT : LEFT;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
+    public boolean isSamePoint(Point other) {
+        return x == other.getX() && y == other.getY();
     }
 
-    @Override
-    public String toString() {
-        return "Point{" +
-               "x=" + x +
-               ", y=" + y +
-               '}';
-    }
 }

@@ -6,7 +6,7 @@ public class ClientApp {
 
     private static final List<String> URLs = List.of(
             // сюда копировать URL из браузера, который открывается при просмотре игры после регистрации
-            "http://192.168.8.34/codenjoy-contest/board/player/o3pj6zxnmufzsbtdc5qw?code=7516293637678207099&gameName=battlecity"
+            "http://battlecity.godeltech.com/codenjoy-contest/board/player/wbl3y72q6aurt4ujd783?code=5304663248276302044&gameName=battlecity"
     );
 
     public static void main(String[] args) {
