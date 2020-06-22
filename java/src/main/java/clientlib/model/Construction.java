@@ -1,5 +1,8 @@
 package clientlib.model;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class Construction extends Point {
 
     private int timer;
@@ -25,5 +28,10 @@ public class Construction extends Point {
 
     public void setPower(int power) {
         this.power = power;
+    }
+
+    public int decPowerAndGet() {
+        power--;
+        return power;
     }
 }

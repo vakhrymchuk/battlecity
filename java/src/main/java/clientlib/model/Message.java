@@ -1,7 +1,11 @@
 package clientlib.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@NoArgsConstructor
 public class Message {
 
     private Tank playerTank;
@@ -9,8 +13,12 @@ public class Message {
     private List<Tank> enemies;
     private List<Construction> constructions;
     private List<Bullet> bullets;
+    @JsonIgnore
     private List<String> layers;
     private List<Point> borders;
+
+//    public Message() {
+//    }
 
     public Message(Tank playerTank,
                    List<Tank> aiTanks,

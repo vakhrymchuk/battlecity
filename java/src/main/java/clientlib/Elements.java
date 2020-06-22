@@ -1,9 +1,5 @@
 package clientlib;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 public enum Elements {
 
     NONE(' '),
@@ -61,7 +57,6 @@ public enum Elements {
     }
 
 
-
     @Override
     public String toString() {
         return String.valueOf(ch);
@@ -75,12 +70,6 @@ public enum Elements {
         }
         throw new IllegalArgumentException("No such element for " + ch);
     }
-
-
-
-
-
-
 
 
 }
