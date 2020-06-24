@@ -7,13 +7,7 @@ import clientlib.map.BotMap;
 import clientlib.model.Bullet;
 import clientlib.model.Direction;
 import clientlib.model.Tank;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static clientlib.model.TankStrategy.STAY;
 
 
 public class SampleSolver extends Solver {
@@ -30,12 +24,7 @@ public class SampleSolver extends Solver {
         lastTime = now;
         System.out.println("==== [diff = " + diff + " ] ========================================================");
 
-        try {
-            String s = mapper.writeValueAsString(message);
-            System.out.println(s);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        System.out.println(mapper.writeValueAsString(message));
 
 
         Tank playerTank = message.getPlayerTank();
